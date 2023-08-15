@@ -26,7 +26,7 @@
                   <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9"></path>
                 </svg>
               </div>
-              <div>
+              <div class="pr-7">
                 <button class="w-full rounded-lg border border-dashed border-gray-300 bg-white hover:border-gray-500 font-semibold flex justify-center items-center text-xs sm:text-base text-indigo-600 bg-indigo-40 px-3 py-2 focus:outline-none focus:ring-0 transition truncate">
                   <span class="w-full flex justify-center items-center text-gray-400 hover:text-gray-500">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" class="w-4 sm:w-5 items-center group-hover:text-gray-600">
