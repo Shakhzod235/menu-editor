@@ -1,11 +1,43 @@
 <script setup>
+
 </script>
 <template>
   <main>
     <section>
-      <div class="container m-auto">
-        <div class="flex">
-          <div></div>
+      <div class="container m-auto px-4 lg:max-w-screen-xl">
+        <div class="flex my-10">
+          <div class="flex justify-center flex-1 flex-basis-0">
+            <div class="flex flex-col justify-end gap-2 rounded-lg bg-white w-full border border-zinc-300 shadow-sm p-4">
+              <p class="font-medium text-xs md:text-sm text-gray-500">Кнопки</p>
+              <div class="flex justify-between gap-2">
+                <ul class="w-full">
+                  <li>
+                    <button class="w-full rounded-lg text-xs sm:text-base font-semibold text-indigo-600 bg-indigo-50 px-3 py-2 hover:bg-indigo-100 hover:text-indigo-700 focus:outline-none focus:ring-0 transition truncate">
+                      Главное меню
+                    </button>
+                  </li>
+                </ul>
+                <button class="border border-dashed border-gray-300 hover:border-gray-500 hover:text-gray-500 px-3 rounded-lg focus:outline-none focus-visible:border-indigo-600 transition">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" class="text-gray-400 w-5 h-5 group-hover:text-gray-600">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m6-6H6"></path>
+                  </svg>
+                </button>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" class="w-6 text-gray-400 group-hover:text-gray-600">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9"></path>
+                </svg>
+              </div>
+              <div>
+                <button class="w-full rounded-lg border border-dashed border-gray-300 bg-white hover:border-gray-500 font-semibold flex justify-center items-center text-xs sm:text-base text-indigo-600 bg-indigo-40 px-3 py-2 focus:outline-none focus:ring-0 transition truncate">
+                  <span class="w-full flex justify-center items-center text-gray-400 hover:text-gray-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" class="w-4 sm:w-5 items-center group-hover:text-gray-600">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m6-6H6"></path>
+                    </svg>
+                    Добавить ряд
+                  </span>
+                </button>
+              </div>
+            </div>
+          </div>
           <div class="flex-1 flex-basis-0 h-[750px] relative">
             <div class="phone-preview relative bg-no-repeat bg-center h-full bg-[url('//quo.asay.me/files/images/preview/phone-preview1.png')] bg-[length:493px_749px] p-4">
               <div class="flex flex-col justify-between translate-x-0.5 w-80 m-auto h-[687px]">
