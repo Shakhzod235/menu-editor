@@ -1,5 +1,4 @@
 <script setup>
-
 </script>
 <template>
   <main>
@@ -10,14 +9,14 @@
             <div class="flex flex-col justify-end gap-2 rounded-lg bg-white w-full border border-zinc-300 shadow-sm p-4">
               <p class="font-medium text-xs md:text-sm text-gray-500">Кнопки</p>
               <div class="flex justify-between gap-2">
-                <ul class="w-full">
-                  <li>
+                <ul class="list w-full">
+                  <li class="list__el">
                     <button class="w-full rounded-lg text-xs sm:text-base font-semibold text-indigo-600 bg-indigo-50 px-3 py-2 hover:bg-indigo-100 hover:text-indigo-700 focus:outline-none focus:ring-0 transition truncate">
                       Главное меню
                     </button>
                   </li>
                 </ul>
-                <button class="border border-dashed border-gray-300 hover:border-gray-500 hover:text-gray-500 px-3 rounded-lg focus:outline-none focus-visible:border-indigo-600 transition">
+                <button class="add-column-btn border border-dashed border-gray-300 hover:border-gray-500 hover:text-gray-500 px-3 rounded-lg focus:outline-none focus-visible:border-indigo-600 transition">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" class="text-gray-400 w-5 h-5 group-hover:text-gray-600">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m6-6H6"></path>
                   </svg>
@@ -80,7 +79,32 @@
       </div>
     </section>
   </main>
-  
+  <div class="fixed flex flex-col justify-center items-center inset-0 overflow-y-auto py-6 z-10 hidden">
+    <div class="rounded-lg transition-all overflow-hidden w-[650px] shadow-xl">
+      <div class="flex flex-col items-start px-6 py-4 bg-white gap-4">
+        <p class="text-lg text-gray-500">Редактирование</p>
+        <div class="flex flex-col items-start w-full">
+          <div class="w-full">
+            <label class="font-medium text-xs md:text-sm text-gray-500" for="type">
+              <span>Название</span>
+            </label>
+            <input class="w-full text-xs md:text-sm border border-zinc-300 form-text-color rounded-md focus:outline-none h-10 focus:ring-0 focus:border-indigo-400 px-2 disabled:bg-neutral-100" type="text" id="type">
+          </div>
+          <div class="w-full">
+            <label class="font-medium text-xs md:text-sm text-gray-500" for="type">
+              <span>Значение</span>
+            </label>
+            <input class="w-full text-xs md:text-sm border border-zinc-300 form-text-color rounded-md focus:outline-none h-10 focus:ring-0 focus:border-indigo-400 px-2 disabled:bg-neutral-100" type="text" id="type">
+          </div>
+        </div>
+      </div>
+      <div class="flex justify-end items-center py-4 px-6 bg-gray-100 gap-2">
+        <button type="submit" class="px-4 py-1 uppercase bg-red-600 border border-transparent rounded-md font-normal text-xs sm:text-sm transition hover:bg-red-500 text-white">Удалить</button>
+        <button type="button" class="px-4 py-1 uppercase bg-white border border-zinc-400 rounded-md font-normal text-xs text-zinc-500 hover:shadow-sm hover:text-zinc-700 focus:outline-none sm:text-sm active:text-zinc-800 active:bg-gray-50 disabled:opacity-25 transition hover:border-zinc-500 focus-visible:border-indigo-500">Отмена</button>
+        <button type="submit" class="px-4 py-1 uppercase rounded-md bg-indigo-500 hover:bg-indigo-600 text-white border border-transparent font-normal text-xs sm:text-sm disabled:opacity-25 transition focus:outline-none focus-visible:border-indigo-600">Сохранить</button>
+      </div>
+    </div>
+  </div>
 </template>
 <style lang="css">
   @tailwind base;
