@@ -1,4 +1,9 @@
 <script setup>
+import useDisplayStore from './stores/DisplayStore.js';
+import Modal from './components/Modal.vue';
+
+const displayStore = useDisplayStore();
+const body = document.body;
 </script>
 <template>
   <main>
@@ -16,7 +21,7 @@
                     </button>
                   </li>
                 </ul>
-                <button class="add-column-btn border border-dashed border-gray-300 hover:border-gray-500 hover:text-gray-500 px-3 rounded-lg focus:outline-none focus-visible:border-indigo-600 transition">
+                <button @click="displayStore.toggleElement(), body.classList.add('overflow-hidden')" class="add-column-btn border border-dashed border-gray-300 hover:border-gray-500 hover:text-gray-500 px-3 rounded-lg focus:outline-none focus-visible:border-indigo-600 transition">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" class="text-gray-400 w-5 h-5 group-hover:text-gray-600">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m6-6H6"></path>
                   </svg>
@@ -26,7 +31,7 @@
                 </svg>
               </div>
               <div class="pr-7">
-                <button class="w-full rounded-lg border border-dashed border-gray-300 bg-white hover:border-gray-500 font-semibold flex justify-center items-center text-xs sm:text-base text-indigo-600 bg-indigo-40 px-3 py-2 focus:outline-none focus:ring-0 transition truncate">
+                <button @click="displayStore.toggleElement(), body.classList.add('overflow-hidden')" class="w-full rounded-lg border border-dashed border-gray-300 bg-white hover:border-gray-500 font-semibold flex justify-center items-center text-xs sm:text-base text-indigo-600 bg-indigo-40 px-3 py-2 focus:outline-none focus:ring-0 transition truncate">
                   <span class="w-full flex justify-center items-center text-gray-400 hover:text-gray-500">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" class="w-4 sm:w-5 items-center group-hover:text-gray-600">
                       <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m6-6H6"></path>
@@ -79,32 +84,31 @@
       </div>
     </section>
   </main>
-  <div class="fixed flex flex-col justify-center items-center inset-0 overflow-y-auto py-6 z-10 hidden">
-    <div class="rounded-lg transition-all overflow-hidden w-[650px] shadow-xl">
-      <div class="flex flex-col items-start px-6 py-4 bg-white gap-4">
-        <p class="text-lg text-gray-500">Редактирование</p>
-        <div class="flex flex-col items-start w-full">
-          <div class="w-full">
-            <label class="font-medium text-xs md:text-sm text-gray-500" for="type">
-              <span>Название</span>
-            </label>
-            <input class="w-full text-xs md:text-sm border border-zinc-300 form-text-color rounded-md focus:outline-none h-10 focus:ring-0 focus:border-indigo-400 px-2 disabled:bg-neutral-100" type="text" id="type">
-          </div>
-          <div class="w-full">
-            <label class="font-medium text-xs md:text-sm text-gray-500" for="type">
-              <span>Значение</span>
-            </label>
-            <input class="w-full text-xs md:text-sm border border-zinc-300 form-text-color rounded-md focus:outline-none h-10 focus:ring-0 focus:border-indigo-400 px-2 disabled:bg-neutral-100" type="text" id="type">
-          </div>
+  <Modal>
+    <div class="flex flex-col items-start px-6 py-4 bg-white gap-4">
+      <p class="text-lg text-gray-500">Редактирование</p>
+      <div class="flex flex-col items-start w-full">
+        <div class="w-full">
+          <label class="font-medium text-xs md:text-sm text-gray-500" for="type">
+            <span>Название</span>
+          </label>
+          <input class="w-full text-xs md:text-sm border border-zinc-300 form-text-color rounded-md focus:outline-none h-10 focus:ring-0 focus:border-indigo-400 px-2 disabled:bg-neutral-100" type="text" id="type">
+        </div>
+        <div class="w-full">
+          <label class="font-medium text-xs md:text-sm text-gray-500" for="type">
+            <span>Значение</span>
+          </label>
+          <input class="w-full text-xs md:text-sm border border-zinc-300 form-text-color rounded-md focus:outline-none h-10 focus:ring-0 focus:border-indigo-400 px-2 disabled:bg-neutral-100" type="text" id="type">
         </div>
       </div>
-      <div class="flex justify-end items-center py-4 px-6 bg-gray-100 gap-2">
-        <button type="submit" class="px-4 py-1 uppercase bg-red-600 border border-transparent rounded-md font-normal text-xs sm:text-sm transition hover:bg-red-500 text-white">Удалить</button>
-        <button type="button" class="px-4 py-1 uppercase bg-white border border-zinc-400 rounded-md font-normal text-xs text-zinc-500 hover:shadow-sm hover:text-zinc-700 focus:outline-none sm:text-sm active:text-zinc-800 active:bg-gray-50 disabled:opacity-25 transition hover:border-zinc-500 focus-visible:border-indigo-500">Отмена</button>
-        <button type="submit" class="px-4 py-1 uppercase rounded-md bg-indigo-500 hover:bg-indigo-600 text-white border border-transparent font-normal text-xs sm:text-sm disabled:opacity-25 transition focus:outline-none focus-visible:border-indigo-600">Сохранить</button>
-      </div>
     </div>
-  </div>
+    <div class="flex justify-end items-center py-4 px-6 bg-gray-100 gap-2">
+      <button type="submit" class="px-4 py-1 uppercase bg-red-600 border border-transparent rounded-md font-normal text-xs sm:text-sm transition hover:bg-red-500 text-white">Удалить</button>
+      <button @click="displayStore.toggleElement(), body.classList.remove('overflow-hidden')" type="button" class="px-4 py-1 uppercase bg-white border border-zinc-400 rounded-md font-normal text-xs text-zinc-500 hover:shadow-sm hover:text-zinc-700 focus:outline-none sm:text-sm active:text-zinc-800 active:bg-gray-50 disabled:opacity-25 transition hover:border-zinc-500 focus-visible:border-indigo-500">Отмена</button>
+      <button type="submit" class="px-4 py-1 uppercase rounded-md bg-indigo-500 hover:bg-indigo-600 text-white border border-transparent font-normal text-xs sm:text-sm disabled:opacity-25 transition focus:outline-none focus-visible:border-indigo-600">Сохранить</button>
+    </div>
+  </Modal>
+  <div v-if="displayStore.isElementVisible" class="fixed inset-0 bg-gray-500 opacity-75 w-full h-full z-20"></div>
 </template>
 <style lang="css">
   @tailwind base;
@@ -126,6 +130,6 @@
     left: calc(50% - 164px);
     width: 331px;
     height: 76px;
-    background: rgb(15 23 42);
+    background-color: rgb(15, 23, 42);
   }
 </style>
