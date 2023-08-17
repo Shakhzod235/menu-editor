@@ -1,9 +1,21 @@
 <script setup>
-import useDisplayStore from './stores/DisplayStore.js';
 import Modal from './components/Modal.vue';
+import ButtonList from './components/ButtonList.vue';
+
+import useDisplayStore from './stores/DisplayStore.js';
+import useButtonStore from './stores/ButtonStore.js';
 
 const displayStore = useDisplayStore();
+const buttonStore = useButtonStore();
+
 const body = document.body;
+
+const checkEmptyInput = () => {
+  const inputIsEmpty = buttonStore.newButton.name.trim() === '';
+  buttonStore.isSaveBtnDisabled = inputIsEmpty;
+}
+
+
 </script>
 <template>
   <main>
@@ -13,25 +25,9 @@ const body = document.body;
           <div class="flex justify-center flex-1 flex-basis-0">
             <div class="flex flex-col justify-end gap-2 rounded-lg bg-white w-full border border-zinc-300 shadow-sm p-4">
               <p class="font-medium text-xs md:text-sm text-gray-500">Кнопки</p>
-              <div class="flex justify-between gap-2">
-                <ul class="list w-full">
-                  <li class="list__el">
-                    <button class="w-full rounded-lg text-xs sm:text-base font-semibold text-indigo-600 bg-indigo-50 px-3 py-2 hover:bg-indigo-100 hover:text-indigo-700 focus:outline-none focus:ring-0 transition truncate">
-                      Главное меню
-                    </button>
-                  </li>
-                </ul>
-                <button @click="displayStore.toggleElement(), body.classList.add('overflow-hidden')" class="add-column-btn border border-dashed border-gray-300 hover:border-gray-500 hover:text-gray-500 px-3 rounded-lg focus:outline-none focus-visible:border-indigo-600 transition">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" class="text-gray-400 w-5 h-5 group-hover:text-gray-600">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m6-6H6"></path>
-                  </svg>
-                </button>
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" class="w-6 text-gray-400 group-hover:text-gray-600">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9"></path>
-                </svg>
-              </div>
+              <ButtonList />
               <div class="pr-7">
-                <button @click="displayStore.toggleElement(), body.classList.add('overflow-hidden')" class="w-full rounded-lg border border-dashed border-gray-300 bg-white hover:border-gray-500 font-semibold flex justify-center items-center text-xs sm:text-base text-indigo-600 bg-indigo-40 px-3 py-2 focus:outline-none focus:ring-0 transition truncate">
+                <button @click="displayStore.toggleElement(), buttonStore.toggleRowBtnClicked(), body.classList.toggle('overflow-hidden')" class="w-full rounded-lg border border-dashed border-gray-300 bg-white hover:border-gray-500 font-semibold flex justify-center items-center text-xs sm:text-base text-indigo-600 bg-indigo-40 px-3 py-2 focus:outline-none focus:ring-0 transition truncate">
                   <span class="w-full flex justify-center items-center text-gray-400 hover:text-gray-500">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" class="w-4 sm:w-5 items-center group-hover:text-gray-600">
                       <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m6-6H6"></path>
@@ -92,20 +88,20 @@ const body = document.body;
           <label class="font-medium text-xs md:text-sm text-gray-500" for="type">
             <span>Название</span>
           </label>
-          <input class="w-full text-xs md:text-sm border border-zinc-300 form-text-color rounded-md focus:outline-none h-10 focus:ring-0 focus:border-indigo-400 px-2 disabled:bg-neutral-100" type="text" id="type">
+          <input v-model="buttonStore.newButton.name" @input="checkEmptyInput" class="input input-name w-full text-xs md:text-sm border border-zinc-300 form-text-color rounded-md focus:outline-none h-10 focus:ring-0 focus:border-indigo-400 px-2 disabled:bg-neutral-100" type="text" id="type">
         </div>
         <div class="w-full">
           <label class="font-medium text-xs md:text-sm text-gray-500" for="type">
             <span>Значение</span>
           </label>
-          <input class="w-full text-xs md:text-sm border border-zinc-300 form-text-color rounded-md focus:outline-none h-10 focus:ring-0 focus:border-indigo-400 px-2 disabled:bg-neutral-100" type="text" id="type">
+          <input v-model="buttonStore.newButton.value" class="input w-full text-xs md:text-sm border border-zinc-300 form-text-color rounded-md focus:outline-none h-10 focus:ring-0 focus:border-indigo-400 px-2 disabled:bg-neutral-100" type="text" id="type">
         </div>
       </div>
     </div>
     <div class="flex justify-end items-center py-4 px-6 bg-gray-100 gap-2">
       <button type="submit" class="px-4 py-1 uppercase bg-red-600 border border-transparent rounded-md font-normal text-xs sm:text-sm transition hover:bg-red-500 text-white">Удалить</button>
       <button @click="displayStore.toggleElement(), body.classList.remove('overflow-hidden')" type="button" class="px-4 py-1 uppercase bg-white border border-zinc-400 rounded-md font-normal text-xs text-zinc-500 hover:shadow-sm hover:text-zinc-700 focus:outline-none sm:text-sm active:text-zinc-800 active:bg-gray-50 disabled:opacity-25 transition hover:border-zinc-500 focus-visible:border-indigo-500">Отмена</button>
-      <button type="submit" class="px-4 py-1 uppercase rounded-md bg-indigo-500 hover:bg-indigo-600 text-white border border-transparent font-normal text-xs sm:text-sm disabled:opacity-25 transition focus:outline-none focus-visible:border-indigo-600">Сохранить</button>
+      <button @click="displayStore.toggleElement(), buttonStore.addRowButton(), body.classList.remove('overflow-hidden')" :disabled="buttonStore.isSaveBtnDisabled" type="submit" id="save-btn" class="save-btn px-4 py-1 uppercase rounded-md bg-indigo-500 hover:bg-indigo-600 text-white border border-transparent font-normal text-xs sm:text-sm disabled:opacity-25 transition focus:outline-none focus-visible:border-indigo-600">Сохранить</button>
     </div>
   </Modal>
   <div v-if="displayStore.isElementVisible" class="fixed inset-0 bg-gray-500 opacity-75 w-full h-full z-20"></div>
@@ -131,5 +127,8 @@ const body = document.body;
     width: 331px;
     height: 76px;
     background-color: rgb(15, 23, 42);
+  }
+  .btn-element {
+    flex: 1 0 calc(33.33% - 35px);
   }
 </style>
