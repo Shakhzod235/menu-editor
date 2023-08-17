@@ -15,7 +15,6 @@ const checkEmptyInput = () => {
   buttonStore.isSaveBtnDisabled = inputIsEmpty;
 }
 
-
 </script>
 <template>
   <main>
@@ -57,8 +56,18 @@ const checkEmptyInput = () => {
                 <div>
                   <div class="flex flex-col gap-2">
                     <p class="rounded-2xl bg-gray-900/75 p-3 mx-3 w-72 break-words text-white">Ресурс добавлен в список!</p>
-                    <div class="flex flex-col pb-2 w-72 mx-3">
-                      <p class="bg-black/50 flex-1 p-3 rounded-lg text-center whitespace-nowrap overflow-hidden text-ellipsis text-white">Главное меню</p>
+                    <div class="flex flex-col pb-2 w-72 mx-3 cursor-input">
+                      <div class="flex w-full gap-2">
+                        <div class="flex w-full gap-2 flex-col">
+                          <div v-for="row in buttonStore.buttons" class="check flex justify-between w-full gap-1 flex-wrap">
+                            <div v-for="button in row" :key="button.id" class="btn-element flex justify-between flex-wrap w-full gap-2 overflow-hidden">
+                              <button class="bg-black/50 flex-1 p-3 rounded-lg text-center whitespace-nowrap overflow-hidden text-ellipsis text-white cursor-default">
+                                {{ button.name }}
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                   <div class="w-full">

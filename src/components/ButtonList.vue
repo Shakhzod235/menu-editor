@@ -20,8 +20,8 @@
 <template>
   <div class="flex w-full gap-2">
     <div class="flex w-full gap-2 flex-col">
-      <div v-for="(row, rowIndex) in buttonStore.buttons" class="flex justify-between w-full gap-2 flex-wrap">
-        <div v-for="(button, buttonIndex) in row" :key="button.id" class="btn-element flex justify-between flex-wrap w-full gap-2">
+      <div v-for="row in buttonStore.buttons" class="check flex justify-between w-full gap-2 flex-wrap">
+        <div v-for="button in row" :key="button.id" class="btn-element flex justify-between flex-wrap w-full gap-2 overflow-hidden">
           <button class="w-full rounded-lg text-xs sm:text-base font-semibold text-indigo-600 bg-indigo-50 px-3 py-2 hover:bg-indigo-100 hover:text-indigo-700 focus:outline-none focus:ring-0 transition truncate">
             {{ button.name }}
           </button>
