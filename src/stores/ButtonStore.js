@@ -1,7 +1,9 @@
 import { defineStore } from 'pinia';
+import { v4 as uuidv4 } from 'uuid';
 
 const useButtonStore = defineStore('button', {
   state: () => ({
+    currentButton: null,
     isSaveBtnDisabled: true,
     isColumnBtnClicked: false,
     isRowBtnClicked: false,
@@ -16,10 +18,11 @@ const useButtonStore = defineStore('button', {
   actions: {
     addColumnButton() {
       const newButton = {
-        id: this.buttons.flat().length + 1,
+        id: uuidv4(),
         name: this.newButton.name,
         value: this.newButton.value
       };
+
       for(let i = 0; i < this.buttons.length; i++) {
         if (this.buttons[i].length < 3) {
           this.buttons[i].push(newButton);
@@ -33,11 +36,11 @@ const useButtonStore = defineStore('button', {
     },
     addRowButton() {
       const newButton = {
-        id: this.buttons.flat().length + 1,
+        id: uuidv4(),
         name: this.newButton.name,
         value: this.newButton.value
       };
-    
+
       if (this.buttons.length === 0 || this.buttons[this.buttons.length - 1].length >= 3) {
         this.buttons.push([newButton]);
       } else {
@@ -53,11 +56,24 @@ const useButtonStore = defineStore('button', {
       this.newButton.name = '';
       this.newButton.value = '';
     },
-    editButton() {
-      this.buttons[i] = updatedButton;
+    selectCurrentButton(button) {
+      this.currentButton = button;
     },
     deleteButton() {
-      this.buttons.splice(index, 1);
+      for (let i = 0; i < this.buttons.length; i++) {
+        for (let j = 0; j < this.buttons[i].length; j++) {
+          if (this.buttons[i][j].id === this.currentButton.id) {
+            this.buttons[i].splice(j, 1);
+            if (this.buttons[i].length === 0) {
+              this.buttons.splice(i, 1);
+            }
+            return;
+          }
+        }
+      }
+    },
+    handleSingleButton() {
+      return this.buttons.flat().length <= 1;
     },
     toggleColumnBtnClicked() {
       this.isColumnBtnClicked = !this.isColumnBtnClicked;
