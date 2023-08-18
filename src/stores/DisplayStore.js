@@ -2,11 +2,13 @@ import { defineStore } from 'pinia';
 
 const useDisplayStore = defineStore('display', {
   state: () => ({
-    isElementVisible: false
+    isElementVisible: false,
+    activeModal: ''
   }),
   actions: {
-    toggleElement() {
+    toggleElement(modalType) {
       this.isElementVisible = !this.isElementVisible;
+      this.activeModal = modalType;
     }
   }
 });

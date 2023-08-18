@@ -24,7 +24,7 @@
               <p class="font-medium text-xs md:text-sm text-gray-500">Кнопки</p>
               <ButtonList />
               <div class="pr-7">
-                <button @click="displayStore.toggleElement(), buttonStore.toggleRowBtnClicked(), body.classList.toggle('overflow-hidden')" class="w-full rounded-lg border border-dashed border-gray-300 bg-white hover:border-gray-500 font-semibold flex justify-center items-center text-xs sm:text-base text-indigo-600 bg-indigo-40 px-3 py-2 focus:outline-none focus:ring-0 transition truncate">
+                <button v-if="buttonStore.isAddRowBtnVisible()" @click="displayStore.toggleElement('addRow'), buttonStore.toggleAddRowBtn(), body.classList.toggle('overflow-hidden')" class="w-full rounded-lg border border-dashed border-gray-300 bg-white hover:border-gray-500 font-semibold flex justify-center items-center text-xs sm:text-base text-indigo-600 bg-indigo-40 px-3 py-2 focus:outline-none focus:ring-0 transition truncate">
                   <span class="w-full flex justify-center items-center text-gray-400 hover:text-gray-500">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" class="w-4 sm:w-5 items-center group-hover:text-gray-600">
                       <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m6-6H6"></path>
@@ -87,7 +87,7 @@
       </div>
     </section>
   </main>
-  <div v-if="displayStore.isElementVisible" @click="displayStore.toggleElement()" class="fixed flex flex-col justify-center items-center inset-0 overflow-y-auto py-6 z-30">
+  <div v-if="displayStore.activeModal === 'addColumn'" @click="displayStore.toggleElement()" class="fixed flex flex-col justify-center items-center inset-0 overflow-y-auto py-6 z-30">
     <div @click.stop class="rounded-lg transition-all overflow-hidden w-[650px] shadow-xl">
       <div class="flex flex-col items-start px-6 py-4 bg-white gap-4">
         <p class="text-lg text-gray-500">Редактирование</p>
@@ -109,7 +109,33 @@
       <div class="flex justify-end items-center py-4 px-6 bg-gray-100 gap-2">
         <button @click="displayStore.toggleElement(), buttonStore.deleteButton()" :disabled="buttonStore.handleSingleButton()" type="submit" class="delete-btn px-4 py-1 uppercase bg-red-600 border border-transparent rounded-md font-normal text-xs sm:text-sm transition hover:bg-red-500 text-white">Удалить</button>
         <button @click="displayStore.toggleElement(), body.classList.remove('overflow-hidden')" type="button" class="px-4 py-1 uppercase bg-white border border-zinc-400 rounded-md font-normal text-xs text-zinc-500 hover:shadow-sm hover:text-zinc-700 focus:outline-none sm:text-sm active:text-zinc-800 active:bg-gray-50 disabled:opacity-25 transition hover:border-zinc-500 focus-visible:border-indigo-500">Отмена</button>
-        <button @click="displayStore.toggleElement(), buttonStore.addRowButton(), body.classList.remove('overflow-hidden')" :disabled="buttonStore.isSaveBtnDisabled" type="submit" id="save-btn" class="save-btn px-4 py-1 uppercase rounded-md bg-indigo-500 hover:bg-indigo-600 text-white border border-transparent font-normal text-xs sm:text-sm disabled:opacity-25 transition focus:outline-none focus-visible:border-indigo-600">Сохранить</button>
+        <button @click="displayStore.toggleElement(), buttonStore.addColumnButton(), buttonStore.toggleAddColumnBtn(), body.classList.remove('overflow-hidden')" :disabled="buttonStore.isSaveBtnDisabled" type="submit" id="save-btn" class="save-btn px-4 py-1 uppercase rounded-md bg-indigo-500 hover:bg-indigo-600 text-white border border-transparent font-normal text-xs sm:text-sm disabled:opacity-25 transition focus:outline-none focus-visible:border-indigo-600">Сохранить</button>
+      </div>
+    </div>
+  </div>
+  <div v-else-if="displayStore.activeModal === 'addRow'" @click="displayStore.toggleElement()" class="fixed flex flex-col justify-center items-center inset-0 overflow-y-auto py-6 z-30">
+    <div @click.stop class="rounded-lg transition-all overflow-hidden w-[650px] shadow-xl">
+      <div class="flex flex-col items-start px-6 py-4 bg-white gap-4">
+        <p class="text-lg text-gray-500">Редактирование</p>
+        <div class="flex flex-col items-start w-full">
+          <div class="w-full">
+            <label class="font-medium text-xs md:text-sm text-gray-500" for="input-name">
+              <span>Название</span>
+            </label>
+            <input v-model="buttonStore.newButton.name" id="input-name" @input="checkEmptyInput" class="input input-name w-full text-xs md:text-sm border border-zinc-300 form-text-color rounded-md focus:outline-none h-10 focus:ring-0 focus:border-indigo-400 px-2 disabled:bg-neutral-100" type="text">
+          </div>
+          <div class="w-full">
+            <label class="font-medium text-xs md:text-sm text-gray-500" for="input-value">
+              <span>Значение</span>
+            </label>
+            <input v-model="buttonStore.newButton.value" id="input-value" class="input w-full text-xs md:text-sm border border-zinc-300 form-text-color rounded-md focus:outline-none h-10 focus:ring-0 focus:border-indigo-400 px-2 disabled:bg-neutral-100" type="text">
+          </div>
+        </div>
+      </div>
+      <div class="flex justify-end items-center py-4 px-6 bg-gray-100 gap-2">
+        <button @click="displayStore.toggleElement(), buttonStore.deleteButton()" :disabled="buttonStore.handleSingleButton()" type="submit" class="delete-btn px-4 py-1 uppercase bg-red-600 border border-transparent rounded-md font-normal text-xs sm:text-sm transition hover:bg-red-500 text-white">Удалить</button>
+        <button @click="displayStore.toggleElement(), body.classList.remove('overflow-hidden')" type="button" class="px-4 py-1 uppercase bg-white border border-zinc-400 rounded-md font-normal text-xs text-zinc-500 hover:shadow-sm hover:text-zinc-700 focus:outline-none sm:text-sm active:text-zinc-800 active:bg-gray-50 disabled:opacity-25 transition hover:border-zinc-500 focus-visible:border-indigo-500">Отмена</button>
+        <button @click="displayStore.toggleElement(), buttonStore.addRowButton(), buttonStore.toggleAddRowBtn(), body.classList.remove('overflow-hidden')" :disabled="buttonStore.isSaveBtnDisabled" type="submit" id="save-btn" class="save-btn px-4 py-1 uppercase rounded-md bg-indigo-500 hover:bg-indigo-600 text-white border border-transparent font-normal text-xs sm:text-sm disabled:opacity-25 transition focus:outline-none focus-visible:border-indigo-600">Сохранить</button>
       </div>
     </div>
   </div>
