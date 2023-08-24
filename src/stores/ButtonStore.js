@@ -11,41 +11,48 @@ const useButtonStore = defineStore('button', {
     isAddColumnBtnClicked: false,
     isAddRowBtnClicked: false,
 
-    buttons: [
-      [{ id: 1, name: 'Главное меню', value: 'main-menu'}]
-    ],
+    buttons: [[{ id: uuidv4(), name: 'Главное меню', value: 'main-menu' }]],
     newButton: {
       name: '',
-      value: ''
-    }
+      value: '',
+    },
+    targetRow: [],
   }),
   actions: {
     addRowButton() {
       const newButton = {
         id: uuidv4(),
         name: this.newButton.name,
-        value: this.newButton.value
+        value: this.newButton.value,
       };
-  
+
       this.buttons.push([newButton]);
-  
-      this.newButton.name = '';
-      this.newButton.value = '';
+
+      this.newButton = {
+        name: '',
+        value: '',
+      };
+
+      this.isSaveBtnDisabled = true;
     },
     addColumnButton() {
       const newButton = {
         id: uuidv4(),
         name: this.newButton.name,
-        value: this.newButton.value
+        value: this.newButton.value,
       };
-    
+
       if (this.currentRowIndex !== null) {
         this.buttons[this.currentRowIndex].push(newButton);
         this.currentRowIndex = null;
       }
-    
-      this.newButton.name = '';
-      this.newButton.value = '';
+
+      this.newButton = {
+        name: '',
+        value: '',
+      };
+
+      this.isSaveBtnDisabled = true;
     },
     selectCurrentButton(button) {
       this.currentButton = button;
@@ -72,13 +79,17 @@ const useButtonStore = defineStore('button', {
     handleSingleButton() {
       return this.buttons.flat().length <= 1;
     },
+    checkEmptyInput() {
+      const inputIsEmpty = this.newButton.name.trim() === '';
+      this.isSaveBtnDisabled = inputIsEmpty;
+    },
     toggleAddColumnBtn(rowIndex) {
       this.isAddColumnBtnClicked = !this.isAddColumnBtnClicked;
       this.currentRowIndex = rowIndex;
     },
     toggleAddRowBtn() {
       this.isAddRowBtnClicked = !this.isAddRowBtnClicked;
-    }
-  }
+    },
+  },
 });
 export default useButtonStore;
