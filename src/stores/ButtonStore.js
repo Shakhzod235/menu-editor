@@ -89,7 +89,7 @@ const useButtonStore = defineStore('button', {
     },
     toggleAddRowBtn() {
       this.isAddRowBtnClicked = !this.isAddRowBtnClicked;
-    },
-  },
+    }
+  }
 });
 export default useButtonStore;
