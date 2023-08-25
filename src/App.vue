@@ -112,7 +112,7 @@ const body = document.body;
                         <div class="flex w-full gap-2 flex-col">
                           <div
                             v-for="row in buttonStore.buttons"
-                            class="check flex justify-between w-full gap-1 flex-wrap"
+                            class="flex justify-between w-full gap-1 flex-wrap"
                           >
                             <div
                               v-for="button in row"

@@ -15,8 +15,7 @@ const useButtonStore = defineStore('button', {
     newButton: {
       name: '',
       value: '',
-    },
-    targetRow: [],
+    }
   }),
   actions: {
     addRowButton() {
